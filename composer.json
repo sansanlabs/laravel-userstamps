@@ -1,0 +1,42 @@
+{
+  "name": "sansanlabs/laravel-userstamps",
+  "description": "Package to add userstamps to models.",
+  "keywords": [
+    "laravel",
+    "eloquent",
+    "userstamps",
+    "created_by",
+    "updated_by",
+    "deleted_by",
+    "creator",
+    "editor",
+    "destroyer",
+    "model-events"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^7.4|^8.0",
+    "laravel/framework": "^10.0|^11.0|^12.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "SanSanLabs\\LaravelUserstamps\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SanSanLabs\\LaravelUserstamps\\UserstampsServiceProvider"
+      ]
+    }
+  },
+  "authors": [
+    {
+      "name": "Edi Kurniawan",
+      "email": "edikurniawan.dev@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
