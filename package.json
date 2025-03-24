@@ -1,7 +1,6 @@
 {
   "name": "sansanlabs-laravel-userstamps",
-  "version": "1.0.0",
-  "description": "Package to add created_by, updated_by and deleted_by to models.",
+  "description": "Package to add userstamps to models.",
   "keywords": [
     "laravel",
     "eloquent",
@@ -9,6 +8,9 @@
     "created_by",
     "updated_by",
     "deleted_by",
+    "creator",
+    "editor",
+    "destroyer",
     "model-events"
   ],
   "homepage": "https://github.com/sansanlabs/laravel-userstamps#readme",
