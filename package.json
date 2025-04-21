@@ -1,0 +1,36 @@
+{
+  "name": "sansanlabs-laravel-userstamps",
+  "description": "Package to add userstamps to models.",
+  "keywords": [
+    "laravel",
+    "eloquent",
+    "userstamps",
+    "created_by",
+    "updated_by",
+    "deleted_by",
+    "creator",
+    "editor",
+    "destroyer",
+    "model-events"
+  ],
+  "homepage": "https://github.com/sansanlabs/laravel-userstamps#readme",
+  "bugs": {
+    "url": "https://github.com/sansanlabs/laravel-userstamps/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sansanlabs/laravel-userstamps.git"
+  },
+  "scripts": {
+    "prettier": "npx prettier . --write --ignore-path .prettierignore"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Edi Kurniawan",
+    "email": "edikurniawan.dev@gmail.com"
+  },
+  "devDependencies": {
+    "@prettier/plugin-php": "^0.22.4",
+    "prettier": "^3.5.3"
+  }
+}
