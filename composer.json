@@ -42,13 +42,12 @@
   },
   "autoload": {
     "psr-4": {
-      "VendorName\\Skeleton\\": "src/",
-      "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+      "SanSanLabs\\Userstamps\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "VendorName\\Skeleton\\Tests\\": "tests/",
+      "SanSanLabs\\Userstamps\\Tests\\": "tests/",
       "Workbench\\App\\": "workbench/app/"
     }
   },
