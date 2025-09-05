@@ -11,18 +11,18 @@ trait HasUserstamps {
     static::observe(UserstampsObserver::class);
   }
 
-  public function creator(): MorphTo {
-    $relation = $this->morphTo(__FUNCTION__, config("userstamps.created_by_column") . "_type", config("userstamps.created_by_column"));
+  public function createdBy(): MorphTo {
+    $relation = $this->morphTo(__FUNCTION__, config("userstamps.created_by_column") . "_type", config("userstamps.created_by_column" . "_id"));
     return config("userstamps.with_trashed") ? $relation->withTrashed() : $relation;
   }
 
-  public function editor(): MorphTo {
-    $relation = $this->morphTo(__FUNCTION__, config("userstamps.updated_by_column") . "_type", config("userstamps.updated_by_column"));
+  public function updatedBy(): MorphTo {
+    $relation = $this->morphTo(__FUNCTION__, config("userstamps.updated_by_column") . "_type", config("userstamps.updated_by_column" . "_id"));
     return config("userstamps.with_trashed") ? $relation->withTrashed() : $relation;
   }
 
-  public function destroyer(): MorphTo {
-    $relation = $this->morphTo(__FUNCTION__, config("userstamps.deleted_by_column") . "_type", config("userstamps.deleted_by_column"));
+  public function deletedBy(): MorphTo {
+    $relation = $this->morphTo(__FUNCTION__, config("userstamps.deleted_by_column") . "_type", config("userstamps.deleted_by_column" . "_id"));
     return config("userstamps.with_trashed") ? $relation->withTrashed() : $relation;
   }
 
