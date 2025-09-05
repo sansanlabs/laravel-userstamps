@@ -9,3 +9,6 @@ parameters:
     tmpDir: build/phpstan
     checkOctaneCompatibility: true
     checkModelProperties: true
+    ignoreErrors:
+        - '#Trait SanSanLabs\\Userstamps\\Concerns\\HasUserstamps is used zero times#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::usingSoftDeletes#'
