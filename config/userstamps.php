@@ -15,17 +15,26 @@ return [
   "users_table_id_column_name" => "id",
 
   /*
-   * Specify the column that stores the ID of the user who initially created the entry
+   * If you set the column name to "created_by",
+   * it will generate two columns:
+   * - created_by_id
+   * - created_by_type
    */
   "created_by_column" => "created_by",
 
   /*
-   * Specify the column that holds the ID of the user who last updated the entry
+   * If you set the column name to "updated_by",
+   * it will generate two columns:
+   * - updated_by_id
+   * - updated_by_type
    */
   "updated_by_column" => "updated_by",
 
   /*
-   * Specify the column that contains the ID of the user who removed the entry
+   * If you set the column name to "deleted_by",
+   * it will generate two columns:
+   * - deleted_by_id
+   * - deleted_by_type
    */
   "deleted_by_column" => "deleted_by",
 
