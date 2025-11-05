@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-userstamps` will be documented in this file.
 
+## v6.0.0 - 2025-11-05
+
+### What's Changed
+
+* build(deps): bump stefanzweifel/git-auto-commit-action from 6 to 7 by @dependabot[bot] in https://github.com/sansanlabs/laravel-userstamps/pull/6
+* build(deps): bump actions/setup-node from 4 to 6 by @dependabot[bot] in https://github.com/sansanlabs/laravel-userstamps/pull/7
+
+**Full Changelog**: https://github.com/sansanlabs/laravel-userstamps/compare/v5.0.0...v6.0.0
+
 ## v5.0.0 - 2025-09-06
 
 ### What's Changed
