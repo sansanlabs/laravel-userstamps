@@ -7,39 +7,67 @@ use Illuminate\Database\Eloquent\Model;
 class UserstampsObserver {
   public function creating(Model $model): void {
     if ($model->isClean(config("userstamps.created_by_column"))) {
-      $model->{config("userstamps.created_by_column") . "_id"} = $this->getUserPrimaryValueAndClass()["id"];
-      $model->{config("userstamps.created_by_column") . "_type"} = $this->getUserPrimaryValueAndClass()["type"];
+      $userData = $this->getUserPrimaryValueAndClass();
+      $model->{config("userstamps.created_by_column") . "_id"} = $userData["id"];
+
+      if (config("userstamps.is_using_morph")) {
+        $model->{config("userstamps.created_by_column") . "_type"} = $userData["type"];
+      }
     }
 
     if ($model->isClean(config("userstamps.updated_by_column"))) {
-      $model->{config("userstamps.updated_by_column") . "_id"} = $this->getUserPrimaryValueAndClass()["id"];
-      $model->{config("userstamps.updated_by_column") . "_type"} = $this->getUserPrimaryValueAndClass()["type"];
+      $userData = $this->getUserPrimaryValueAndClass();
+      $model->{config("userstamps.updated_by_column") . "_id"} = $userData["id"];
+
+      if (config("userstamps.is_using_morph")) {
+        $model->{config("userstamps.updated_by_column") . "_type"} = $userData["type"];
+      }
     }
   }
 
   public function updating(Model $model): void {
     if ($model->isClean(config("userstamps.updated_by_column"))) {
-      $model->{config("userstamps.updated_by_column") . "_id"} = $this->getUserPrimaryValueAndClass()["id"];
-      $model->{config("userstamps.updated_by_column") . "_type"} = $this->getUserPrimaryValueAndClass()["type"];
+      $userData = $this->getUserPrimaryValueAndClass();
+      $model->{config("userstamps.updated_by_column") . "_id"} = $userData["id"];
+
+      if (config("userstamps.is_using_morph")) {
+        $model->{config("userstamps.updated_by_column") . "_type"} = $userData["type"];
+      }
     }
   }
 
   public function deleting(Model $model): void {
     if ($model->usingSoftDeletes()) {
-      $model->{config("userstamps.deleted_by_column") . "_id"} = $this->getUserPrimaryValueAndClass()["id"];
-      $model->{config("userstamps.deleted_by_column") . "_type"} = $this->getUserPrimaryValueAndClass()["type"];
-      $model->{config("userstamps.updated_by_column") . "_id"} = $this->getUserPrimaryValueAndClass()["id"];
-      $model->{config("userstamps.updated_by_column") . "_type"} = $this->getUserPrimaryValueAndClass()["type"];
+      $userData = $this->getUserPrimaryValueAndClass();
+
+      $model->{config("userstamps.deleted_by_column") . "_id"} = $userData["id"];
+      if (config("userstamps.is_using_morph")) {
+        $model->{config("userstamps.deleted_by_column") . "_type"} = $userData["type"];
+      }
+
+      $model->{config("userstamps.updated_by_column") . "_id"} = $userData["id"];
+      if (config("userstamps.is_using_morph")) {
+        $model->{config("userstamps.updated_by_column") . "_type"} = $userData["type"];
+      }
+
       $this->saveWithoutEventDispatching($model);
     }
   }
 
   public function restoring(Model $model): void {
     if ($model->usingSoftDeletes()) {
+      $userData = $this->getUserPrimaryValueAndClass();
+
       $model->{config("userstamps.deleted_by_column") . "_id"} = null;
-      $model->{config("userstamps.deleted_by_column") . "_type"} = null;
-      $model->{config("userstamps.updated_by_column") . "_id"} = $this->getUserPrimaryValueAndClass()["id"];
-      $model->{config("userstamps.updated_by_column") . "_type"} = $this->getUserPrimaryValueAndClass()["type"];
+      if (config("userstamps.is_using_morph")) {
+        $model->{config("userstamps.deleted_by_column") . "_type"} = null;
+      }
+
+      $model->{config("userstamps.updated_by_column") . "_id"} = $userData["id"];
+      if (config("userstamps.is_using_morph")) {
+        $model->{config("userstamps.updated_by_column") . "_type"} = $userData["type"];
+      }
+
       $this->saveWithoutEventDispatching($model);
     }
   }
@@ -62,16 +90,12 @@ class UserstampsObserver {
       ];
     }
 
-    if (config("userstamps.users_table_id_column_name") !== "id") {
-      return [
-        "id" => auth()->user()->{config("userstamps.users_table_id_column_name")},
-        "type" => get_class(auth()->user()),
-      ];
-    }
+    $user = auth()->user();
+    $idColumn = config("userstamps.users_table_id_column_name");
 
     return [
-      "id" => auth()->id(),
-      "type" => get_class(auth()->user()),
+      "id" => $idColumn !== "id" ? $user->{$idColumn} : auth()->id(),
+      "type" => get_class($user),
     ];
   }
 }
