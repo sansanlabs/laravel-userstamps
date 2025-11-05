@@ -1,37 +1,54 @@
 <?php
+
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Config;
 
-it("add column userstamps", function (): void {
-  testUserstampsWorkflow();
+it("add column userstamps with morph enabled", function (): void {
+  Config::set("userstamps.is_using_morph", true);
+  testUserstampsWorkflow(true);
 });
 
-it("add custom column userstamps", function (): void {
+it("add column userstamps with morph disabled", function (): void {
+  Config::set("userstamps.is_using_morph", false);
+  testUserstampsWorkflow(false);
+});
+
+it("add custom column userstamps with morph enabled", function (): void {
+  Config::set("userstamps.is_using_morph", true);
   Config::set("userstamps.created_by_column", "creator");
   Config::set("userstamps.updated_by_column", "editor");
   Config::set("userstamps.deleted_by_column", "destroyer");
 
-  testUserstampsWorkflow();
+  testUserstampsWorkflow(true);
 });
 
-function testUserstampsWorkflow(): void {
+it("add custom column userstamps with morph disabled", function (): void {
+  Config::set("userstamps.is_using_morph", false);
+  Config::set("userstamps.created_by_column", "creator");
+  Config::set("userstamps.updated_by_column", "editor");
+  Config::set("userstamps.deleted_by_column", "destroyer");
+
+  testUserstampsWorkflow(false);
+});
+
+function testUserstampsWorkflow(bool $isMorph): void {
   $columns = getColumnNames();
 
   // Test userstamps creation
   createTableWithUserstamps();
-  assertUserstampsExist($columns["created"], $columns["updated"]);
+  assertUserstampsExist($columns["created"], $columns["updated"], $isMorph);
 
   // Test soft userstamps
   addSoftUserstamps();
-  assertSoftUserstampsExist($columns["deleted"]);
+  assertSoftUserstampsExist($columns["deleted"], $isMorph);
 
   // Test userstamps removal
   dropUserstamps();
-  assertUserstampsNotExist($columns["created"], $columns["updated"]);
+  assertUserstampsNotExist($columns["created"], $columns["updated"], $isMorph);
 
   // Test soft userstamps removal
   dropSoftUserstamps();
-  assertSoftUserstampsNotExist($columns["deleted"]);
+  assertSoftUserstampsNotExist($columns["deleted"], $isMorph);
 }
 
 function getColumnNames(): array {
@@ -67,24 +84,55 @@ function dropSoftUserstamps(): void {
   });
 }
 
-function assertUserstampsExist(string $createdColumn, string $updatedColumn): void {
+function assertUserstampsExist(string $createdColumn, string $updatedColumn, bool $isMorph): void {
   $columns = Schema::getColumnlisting("products");
-  expect($columns)->toContain("{$createdColumn}_id", "{$createdColumn}_type");
-  expect($columns)->toContain("{$updatedColumn}_id", "{$updatedColumn}_type");
+
+  // ID columns should always exist
+  expect($columns)->toContain("{$createdColumn}_id");
+  expect($columns)->toContain("{$updatedColumn}_id");
+
+  // Type columns only exist if morph is enabled
+  if ($isMorph) {
+    expect($columns)->toContain("{$createdColumn}_type");
+    expect($columns)->toContain("{$updatedColumn}_type");
+  } else {
+    expect($columns)->not->toContain("{$createdColumn}_type");
+    expect($columns)->not->toContain("{$updatedColumn}_type");
+  }
 }
 
-function assertSoftUserstampsExist(string $deletedColumn): void {
+function assertSoftUserstampsExist(string $deletedColumn, bool $isMorph): void {
   $columns = Schema::getColumnlisting("products");
-  expect($columns)->toContain("{$deletedColumn}_id", "{$deletedColumn}_type");
+
+  // ID column should always exist
+  expect($columns)->toContain("{$deletedColumn}_id");
+
+  // Type column only exists if morph is enabled
+  if ($isMorph) {
+    expect($columns)->toContain("{$deletedColumn}_type");
+  } else {
+    expect($columns)->not->toContain("{$deletedColumn}_type");
+  }
 }
 
-function assertUserstampsNotExist(string $createdColumn, string $updatedColumn): void {
+function assertUserstampsNotExist(string $createdColumn, string $updatedColumn, bool $isMorph): void {
   $columns = Schema::getColumnlisting("products");
-  expect($columns)->not->toContain("{$createdColumn}_id", "{$createdColumn}_type");
-  expect($columns)->not->toContain("{$updatedColumn}_id", "{$updatedColumn}_type");
+
+  // ID columns should not exist
+  expect($columns)->not->toContain("{$createdColumn}_id");
+  expect($columns)->not->toContain("{$updatedColumn}_id");
+
+  // Type columns should also not exist regardless of morph setting
+  expect($columns)->not->toContain("{$createdColumn}_type");
+  expect($columns)->not->toContain("{$updatedColumn}_type");
 }
 
-function assertSoftUserstampsNotExist(string $deletedColumn): void {
+function assertSoftUserstampsNotExist(string $deletedColumn, bool $isMorph): void {
   $columns = Schema::getColumnlisting("products");
-  expect($columns)->not->toContain("{$deletedColumn}_id", "{$deletedColumn}_type");
+
+  // ID column should not exist
+  expect($columns)->not->toContain("{$deletedColumn}_id");
+
+  // Type column should also not exist regardless of morph setting
+  expect($columns)->not->toContain("{$deletedColumn}_type");
 }
