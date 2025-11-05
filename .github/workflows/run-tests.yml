@@ -50,8 +50,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer require --dev phpunit/phpunit:^10.5 --no-interaction --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --dev --no-interaction --no-update
+
+          if [[ "${{ matrix.laravel }}" == 11.* ]]; then
+            composer require --dev phpunit/phpunit:^10.5 --no-interaction --no-update
+          else
+            composer require --dev phpunit/phpunit:^11.5 --no-interaction --no-update
+          fi
+
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: List Installed Dependencies
