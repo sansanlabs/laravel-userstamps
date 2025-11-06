@@ -17,7 +17,7 @@ trait HasUserstamps {
       $relation = $this->morphTo(__FUNCTION__, config("userstamps.created_by_column") . "_type", config("userstamps.created_by_column") . "_id");
     } else {
       $relation = $this->belongsTo(
-        config("auth.providers.users.model", "App\Models\User"),
+        config("userstamps.users_model"),
         config("userstamps.created_by_column") . "_id",
         config("userstamps.users_table_id_column_name"),
       );
@@ -31,7 +31,7 @@ trait HasUserstamps {
       $relation = $this->morphTo(__FUNCTION__, config("userstamps.updated_by_column") . "_type", config("userstamps.updated_by_column") . "_id");
     } else {
       $relation = $this->belongsTo(
-        config("auth.providers.users.model", "App\Models\User"),
+        config("userstamps.users_model"),
         config("userstamps.updated_by_column") . "_id",
         config("userstamps.users_table_id_column_name"),
       );
@@ -45,7 +45,7 @@ trait HasUserstamps {
       $relation = $this->morphTo(__FUNCTION__, config("userstamps.deleted_by_column") . "_type", config("userstamps.deleted_by_column") . "_id");
     } else {
       $relation = $this->belongsTo(
-        config("auth.providers.users.model", "App\Models\User"),
+        config("userstamps.users_model"),
         config("userstamps.deleted_by_column") . "_id",
         config("userstamps.users_table_id_column_name"),
       );

@@ -13,10 +13,10 @@ class UserstampsMacro implements MacroInterface {
   }
 
   public function addUserIdColumn(Blueprint $table, string $column): void {
-    $type = config("userstamps.users_table_id_column_type");
     $isMorph = config("userstamps.is_using_morph");
-    $usersTable = config("userstamps.users_table_name");
-    $usersIdColumn = config("userstamps.users_table_id_column");
+    $usersIdColumn = config("userstamps.users_table_id_column_name");
+    $type = config("userstamps.users_table_id_column_type");
+    $usersTable = config("userstamps.users_table");
 
     match ($type) {
       "bigIncrements" => $isMorph
