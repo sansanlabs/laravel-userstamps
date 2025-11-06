@@ -34,6 +34,28 @@ return [
   "is_using_morph" => false,
 
   /*
+   * The name of the table that holds the users.
+   *
+   * ⚠️ Note:
+   * This configuration is used **only when "is_using_morph" is false**.
+   * If "is_using_morph" is set to true, this value will be ignored
+   * because the relationship will use polymorphic "_type" columns instead
+   * of a fixed user table reference.
+   */
+  "users_table" => "users",
+
+  /*
+   * The model that holds the users.
+   *
+   * ⚠️ Note:
+   * This configuration is used **only when "is_using_morph" is false**.
+   * If "is_using_morph" is set to true, this value will be ignored
+   * because the morph relationship dynamically references the related model
+   * based on the stored "_type" column.
+   */
+  "users_model" => \App\Models\User::class,
+
+  /*
    * Specify the column type used in the schema for the account ID
    *
    * Options: increments, bigIncrements, uuid, ulid
