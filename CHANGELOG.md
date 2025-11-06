@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-userstamps` will be documented in this file.
 
+## v6.2.0 - 2025-11-06
+
+**Full Changelog**: https://github.com/sansanlabs/laravel-userstamps/compare/v6.1.0...v6.2.0
+
 ## v6.1.0 - 2025-11-06
 
 **Full Changelog**: https://github.com/sansanlabs/laravel-userstamps/compare/v6.0.0...v6.1.0
