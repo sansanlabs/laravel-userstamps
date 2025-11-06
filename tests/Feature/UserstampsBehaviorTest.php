@@ -139,7 +139,7 @@ it("userstamps use uuid with morph enabled", function (): void {
 // Tests with morph disabled
 it("userstamps use id with morph disabled", function (): void {
   Config::set("userstamps.is_using_morph", false);
-  Config::set("auth.providers.users.model", UserWithId::class);
+  Config::set("userstamps.users_model", UserWithId::class);
 
   Schema::create("user_with_ids", function (Blueprint $table): void {
     $table->id();
@@ -170,7 +170,7 @@ it("userstamps use id with morph disabled", function (): void {
 it("userstamps use ulid with morph disabled", function (): void {
   Config::set("userstamps.is_using_morph", false);
   Config::set("userstamps.users_table_id_column_type", "ulid");
-  Config::set("auth.providers.users.model", UserWithUlid::class);
+  Config::set("userstamps.users_model", UserWithUlid::class);
 
   Schema::create("user_with_ulids", function (Blueprint $table): void {
     $table->ulid("id")->primary();
@@ -201,7 +201,7 @@ it("userstamps use ulid with morph disabled", function (): void {
 it("userstamps use uuid with morph disabled", function (): void {
   Config::set("userstamps.is_using_morph", false);
   Config::set("userstamps.users_table_id_column_type", "uuid");
-  Config::set("auth.providers.users.model", UserWithUuid::class);
+  Config::set("userstamps.users_model", UserWithUuid::class);
 
   Schema::create("user_with_uuids", function (Blueprint $table): void {
     $table->uuid("id")->primary();
