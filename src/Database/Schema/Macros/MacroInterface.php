@@ -2,6 +2,7 @@
 
 namespace SanSanLabs\Userstamps\Database\Schema\Macros;
 
-interface MacroInterface {
-  public function register();
+interface MacroInterface
+{
+    public function register();
 }
