@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-userstamps` will be documented in this file.
 
+## v6.2.1 - 2025-11-30
+
+### What's Changed
+
+* build(deps): bump actions/checkout from 5 to 6 by @dependabot[bot] in https://github.com/sansanlabs/laravel-userstamps/pull/8
+
+**Full Changelog**: https://github.com/sansanlabs/laravel-userstamps/compare/v6.2.0...v6.2.1
+
 ## v6.2.0 - 2025-11-06
 
 **Full Changelog**: https://github.com/sansanlabs/laravel-userstamps/compare/v6.1.0...v6.2.0
