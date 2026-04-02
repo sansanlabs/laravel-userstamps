@@ -11,7 +11,9 @@ trait HasUserstamps
 {
     public static function bootHasUserstamps(): void
     {
-        static::observe(UserstampsObserver::class);
+        static::registerModelEvent('booted', function () {
+            static::observe(UserstampsObserver::class);
+        });
     }
 
     public function createdBy(): MorphTo|BelongsTo
