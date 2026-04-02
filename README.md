@@ -22,6 +22,10 @@ php artisan vendor:publish --tag="userstamps-config"
 This is the contents of the published config file:
 
 ```php
+<?php
+
+use App\Models\User;
+
 return [
     /*
     | If set to true, the package will generate polymorphic relations
@@ -56,7 +60,7 @@ return [
     | based on the stored "_type" column.
     |
     */
-    'users_model' => \App\Models\User::class,
+    'users_model' => User::class,
 
     /*
     | Specify the column type used in the schema for the account ID
