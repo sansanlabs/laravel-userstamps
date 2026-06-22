@@ -57,7 +57,7 @@ return [
     | Default: bigIncrements
     |
     */
-    'users_table_id_column_type' => 'ulid',
+    'users_table_id_column_type' => 'bigIncrements',
 
     /*
     |--------------------------------------------------------------------------
