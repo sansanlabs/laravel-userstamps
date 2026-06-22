@@ -15,7 +15,7 @@ return [
     | as it affects how your relationship columns are generated.
     |
     */
-    'is_using_morph' => true,
+    'is_using_morph' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -117,5 +117,5 @@ return [
     | in queries.
     |
     */
-    'with_trashed' => true,
+    'with_trashed' => false,
 ];
