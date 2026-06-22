@@ -18,6 +18,8 @@ class UserstampsMacro implements MacroInterface
     {
         $isMorph = config('userstamps.is_using_morph');
         $type = config('userstamps.users_table_id_column_type');
+        $usersTable = config('userstamps.users_table', 'users');
+        $usersTableIdColumnName = config('userstamps.users_table_id_column_name', 'id');
 
         match ($type) {
             'bigIncrements' => $isMorph
@@ -34,10 +36,15 @@ class UserstampsMacro implements MacroInterface
 
             default => $isMorph
                 ? $table->unsignedInteger($column)->nullable()
-                : (function () use ($table, $column): void {
-                    $table->unsignedInteger($column)->nullable();
-                })(),
+                : $table->unsignedInteger($column)->nullable(),
         };
+
+        if (! $isMorph) {
+            $table->foreign($column)
+                ->references($usersTableIdColumnName)
+                ->on($usersTable)
+                ->nullOnDelete();
+        }
     }
 
     private function registerUserstamps(): void
@@ -83,6 +90,9 @@ class UserstampsMacro implements MacroInterface
             if (config('userstamps.is_using_morph')) {
                 $columns[] = config('userstamps.created_by_column').'_type';
                 $columns[] = config('userstamps.updated_by_column').'_type';
+            } else {
+                $this->dropForeign([$createdByColumn]);
+                $this->dropForeign([$updatedByColumn]);
             }
 
             $this->dropColumn($columns);
@@ -97,6 +107,8 @@ class UserstampsMacro implements MacroInterface
 
             if (config('userstamps.is_using_morph')) {
                 $columns[] = config('userstamps.deleted_by_column').'_type';
+            } else {
+                $this->dropForeign([$deletedByColumn]);
             }
 
             $this->dropColumn($columns);
