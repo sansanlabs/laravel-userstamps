@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-userstamps` will be documented in this file.
 
+## v8.0.0 - 2026-06-22
+
+### What's Changed
+
+* build(deps): bump dependabot/fetch-metadata from 3.0.0 to 3.1.0 by @dependabot[bot] in https://github.com/sansanlabs/laravel-userstamps/pull/12
+
+**Full Changelog**: https://github.com/sansanlabs/laravel-userstamps/compare/v7.1.0...v8.0.0
+
 ## v7.1.0 - 2026-04-02
 
 ### What's Changed
